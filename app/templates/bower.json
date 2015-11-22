@@ -1,0 +1,27 @@
+{
+  "name": "<%= title %>",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Toni Hoffmann <toni-hoffmann@xremix.de>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "homepage": "https://github.com/xremix/generator-gulp-sass-coffeescript",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "fontawesome#~4.4.0"
+  }
+}
