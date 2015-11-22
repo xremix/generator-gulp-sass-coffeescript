@@ -3,9 +3,10 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	gulpif = require('gulp-if'),
 	minifyCSS = require('gulp-minify-css'),
+	minifyHTML = require('gulp-minify-html'),
+	uglify = require('gulp-uglify'),
 	path = require('gulp-path'),
 	sass = require('gulp-sass'),
-	uglify = require('gulp-uglify'),
 	plumber = require('gulp-plumber'),
 	flatten = require('gulp-flatten'),
 	gulpFilter = require('gulp-filter'),
@@ -19,8 +20,12 @@ var settings = {
   production:true,
   paths:{
 	distribution: 'dist',
-	libraries:{
-		watch: 'bower.json'
+	web:{
+		src:[
+			'app/**/*.html',
+			'app/**/*.php'
+		],
+		dist:'dist'
 	},
 	scripts:{
 		src: ['app/scripts/main.js'],
@@ -32,14 +37,18 @@ var settings = {
 		distFile: 'main.css',
 		dist: 'dist/styles/'
 	},
+	libraries:{
+		watch: 'bower.json'
+	},
   }
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['script', 'style', 'libraries', 'watch']);
+gulp.task('default', ['web', 'script', 'style', 'libraries', 'watch']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
+	gulp.watch(settings.paths.web.src, ['web']);
 	gulp.watch(settings.paths.scripts.src, ['script']);
 	gulp.watch(settings.paths.style.src, ['style']);
 	gulp.watch(settings.paths.libraries.watch, ['libraries']);
@@ -47,16 +56,24 @@ gulp.task('watch', function(){
 
 
 // ----- SCRIPT TASK -----
+gulp.task('web', function(){
+	gulp.src(settings.paths.web.src)
+	.pipe(plumber())
+	.pipe(gulpif(settings.production, minifyHTML({})))
+	.pipe(gulp.dest(settings.paths.web.dist));
+});
+
+// ----- SCRIPT TASK -----
 gulp.task('script', function() {
 	for (i = 0; i < settings.paths.scripts.src.length; i++) { 
-	gulp.src(settings.paths.scripts.src[i])
-		.pipe(plumber())
-		.pipe(gulpif(settings.production, uglify()))
-		.pipe(concat(settings.paths.scripts.distFile[i]))
-		.pipe(gulpif(settings.production, rename({
-			suffix: ".min"
-		})))
-		.pipe(gulp.dest(settings.paths.scripts.dist));
+		gulp.src(settings.paths.scripts.src[i])
+			.pipe(plumber())
+			.pipe(gulpif(settings.production, uglify()))
+			.pipe(concat(settings.paths.scripts.distFile[i]))
+			.pipe(gulpif(settings.production, rename({
+				suffix: ".min"
+			})))
+			.pipe(gulp.dest(settings.paths.scripts.dist));
 	}
 });
 
@@ -86,25 +103,26 @@ gulp.task('libraries', function() {
 		var fontFilter = gulpFilter(['*.eot', '*.woff', '*.svg', '*.ttf'],{restore:true});
 
 		return gulp.src(mainBowerFiles())
+		.pipe(plumber())
 
 		//---------- js -------
 		.pipe(jsFilter)
-		.pipe(gulp.dest(settings.paths.distribution + '/js/'))
+		.pipe(gulp.dest(settings.paths.scripts.dist))
 		.pipe(uglify())
 		.pipe(rename({
 			suffix: ".min"
 		}))
-		.pipe(gulp.dest(settings.paths.distribution + '/js/'))
+		.pipe(gulp.dest(settings.paths.scripts.dist))
 		.pipe(jsFilter.restore)
 
 		//---------- css -------
 		.pipe(cssFilter)
-		.pipe(gulp.dest(settings.paths.distribution + '/css'))
+		.pipe(gulp.dest(settings.paths.style.dist))
 		.pipe(minifyCSS())
 		.pipe(rename({
 			suffix: ".min"
 		}))
-		.pipe(gulp.dest(settings.paths.distribution + '/css'))
+		.pipe(gulp.dest(settings.paths.style.dist))
 		.pipe(cssFilter.restore)
 
 		//---------- sass -------
@@ -114,7 +132,7 @@ gulp.task('libraries', function() {
 		.pipe(rename({
 			suffix: ".min"
 		}))
-		.pipe(gulp.dest(settings.paths.distribution + '/css'));
+		.pipe(gulp.dest(settings.paths.style.dist));
 		lpipe(sassFilter.restore)
 		//---------- font -------
 		.pipe(fontFilter)
