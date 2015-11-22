@@ -47,6 +47,10 @@ var settings = {
 	libraries:{
 		watch: 'bower.json'
 	},
+	icons:{
+		srcPath:['bower_components/font-awesome/fonts/**.*'],
+		dist:'dist/fonts'
+	}
   }
 };
 
@@ -159,5 +163,10 @@ gulp.task('libraries', function() {
 		//---------- font -------
 		.pipe(fontFilter)
 		.pipe(flatten())
-		.pipe(gulp.dest(settings.paths.distribution + '/fonts'));
+		.pipe(gulp.dest(settings.paths.icons.dist));
 });
+
+
+gulp.task('icons', function() {
+	return gulp.src(settings.paths.icons.srcPath).pipe(gulp.dest(settings.paths.icons.dist));
+	});

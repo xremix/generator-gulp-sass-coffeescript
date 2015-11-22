@@ -5,7 +5,10 @@ WIP
 - [x] Setup Dependencies
 - [x] Setup Code structure
 - [ ] Setup code as Yeoman Generator
-- [ ] Build gulp tasks
+- [x] Build gulp tasks
 - [x] - SASS / SCSS
-- [ ] - CoffeeScript
-- [ ] Make Font Awesome working
+- [x] - CoffeeScript
+- [x] Make Font Awesome working
+- [ ] Optimize script tasks
+- [ ] - Remove JS? (CoffeScript only)
+- [ ] - Optimize loop / concat functionality?
