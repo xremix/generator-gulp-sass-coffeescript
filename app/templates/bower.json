@@ -1,5 +1,5 @@
 {
-  "name": "generator-gulp-sass-coffeescript",
+  "name": "<%= title %>",
   "description": "",
   "main": "",
   "authors": [
