@@ -1,6 +1,6 @@
 {
-  "name": "myproject",
-  "version": "0.1.0",
+  "name": "<%= title %>",
+  "version": "<%= version %>",
   "description": "",
   "files": [
     "app"
