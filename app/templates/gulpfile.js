@@ -13,7 +13,9 @@ var gulp = require('gulp'),
 	gulpFilter = require('gulp-filter'),
 	rename = require('gulp-rename'),
 	mainBowerFiles = require('main-bower-files'),
-	watch = require('gulp-watch');
+	watch = require('gulp-watch'),
+	imagemin = require('gulp-imagemin'),
+	pngquant = require('imagemin-pngquant');
 
 
 // ----- SETTINGS -----
@@ -45,17 +47,21 @@ var settings = {
 		dist: 'dist/styles/'
 	},
 	libraries:{
-		watch: 'bower.json'
+		src: 'bower.json'
 	},
 	icons:{
 		srcPath:['bower_components/font-awesome/fonts/**.*'],
 		dist:'dist/fonts'
+	},
+	images:{
+		src:['app/images/*'],
+		dist:'dist/images',
 	}
   }
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['web', 'script', 'coffee', 'style', 'libraries', 'watch']);
+gulp.task('default', ['web', 'script', 'coffee', 'style', 'images', 'icons', 'libraries', 'watch']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
@@ -63,7 +69,9 @@ gulp.task('watch', function(){
 	gulp.watch(settings.paths.scripts.js.src, ['script']);
 	gulp.watch(settings.paths.scripts.coffee.src, ['coffee']);
 	gulp.watch(settings.paths.style.src, ['style']);
-	gulp.watch(settings.paths.libraries.watch, ['libraries']);
+	gulp.watch(settings.paths.images.src, ['images']);
+	gulp.watch(settings.paths.icons.srcPath, ['icons']);
+	gulp.watch(settings.paths.libraries.src, ['libraries']);
 });
 
 
@@ -168,5 +176,17 @@ gulp.task('libraries', function() {
 
 
 gulp.task('icons', function() {
-	return gulp.src(settings.paths.icons.srcPath).pipe(gulp.dest(settings.paths.icons.dist));
-	});
+	return gulp.src(settings.paths.icons.srcPath)
+	.pipe(gulp.dest(settings.paths.icons.dist));
+});
+
+
+gulp.task('images', () => {
+    return gulp.src(settings.paths.images.src)
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest(settings.paths.images.dist));
+});
