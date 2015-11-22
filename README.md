@@ -7,3 +7,4 @@ WIP
 - [ ] Build gulp tasks
 - [ ] - SASS / SCSS
 - [ ] - CoffeeScript
+- [ ] Make Font Awesome working
