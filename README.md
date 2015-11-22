@@ -4,7 +4,8 @@ WIP
 ##TODO
 - [x] Setup Dependencies
 - [x] Setup Code structure
+- [ ] Setup code as Yeoman Generator
 - [ ] Build gulp tasks
-- [ ] - SASS / SCSS
+- [x] - SASS / SCSS
 - [ ] - CoffeeScript
 - [ ] Make Font Awesome working

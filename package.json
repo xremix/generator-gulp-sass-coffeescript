@@ -1,7 +1,7 @@
 {
   "name": "generator-gulp-sass-coffeescript",
   "version": "0.1.0",
-  "description": "Yeoman Generator using Gulp, Sass, Coffeescript, Bootstrap and Fontawesome",
+  "description": "Scaffold a Website using Gulp, Sass, Coffeescript, Bootstrap and Fontawesome",
   "files": [
     "app"
   ],
