@@ -2,7 +2,8 @@
 WIP
 
 ##TODO
-- [ ] Setup Dependencies
-- [ ] Generate Code structure
+- [x] Setup Dependencies
+- [x] Setup Code structure
 - [ ] Build gulp tasks
-- [ ] ...
+- [ ] - SASS / SCSS
+- [ ] - CoffeeScript
