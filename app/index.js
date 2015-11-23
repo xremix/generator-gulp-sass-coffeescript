@@ -55,6 +55,8 @@ module.exports = generators.Base.extend({
 				version: this.inputProjectVersion
 			}
 			);
+		this.template('_Gulpfile.js', 'Gulpfile.js');
+
 	},
 	dependencies: function () {
 		console.log('Loading dependencies!');
@@ -65,6 +67,10 @@ module.exports = generators.Base.extend({
 	        private: true,
 	        authors:[],
 	        license:"MIT",
+	        main:[],
+	        keywords:[
+	        	"gulp-sass-coffeescript"
+	        ],
 	        "ignore": [
 			    "**/.*",
 			    "node_modules",
