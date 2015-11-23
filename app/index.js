@@ -21,7 +21,7 @@ module.exports = generators.Base.extend({
 		},{
 			type	: 'checkbox',
 			name	: 'dependencies',
-			message : 'What do you want to load',
+			message : 'What dependencies do you want to load now',
 			store	: true,
 			choices:[{
 				name: 'NPM',
@@ -58,6 +58,31 @@ module.exports = generators.Base.extend({
 	},
 	dependencies: function () {
 		console.log('Loading dependencies!');
+		//TODO
+		//name: _s.slugify(this.inputProjectName),
+		 var bowerJson = {
+	        name: this.inputProjectName,
+	        private: true,
+	        authors:[],
+	        license:"MIT",
+	        "ignore": [
+			    "**/.*",
+			    "node_modules",
+			    "bower_components",
+			    "test",
+			    "tests"
+			  ],
+	        dependencies: {
+	        	"jquery": "~2.1.4",
+			    "bootstrap": "~3.3.5",
+			    "font-awesome": "fontawesome#~4.4.0" 
+	        }
+	      };
+        this.fs.writeJSON('bower.json', bowerJson);
+		
+
+
+
 		if(this.loadBower){
 			console.log("-------- Loading Dependencies for Bower--------");
 			this.bowerInstall();
