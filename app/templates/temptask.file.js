@@ -21,6 +21,7 @@ var gulp = require('gulp'),
 // ----- SETTINGS -----
 var settings = {
   production:true,
+  version:'<%= version %>', //Optional
   paths:{
 	distribution: 'dist',
 	web:{
