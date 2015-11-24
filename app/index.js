@@ -55,7 +55,7 @@ module.exports = generators.Base.extend({
 				version: this.inputProjectVersion
 			}
 			);
-		this.template('temptask.js', 'Gulpfile.js');
+		this.template('temptask.file', 'Gulpfile.js');
 
 	},
 	dependencies: function () {
