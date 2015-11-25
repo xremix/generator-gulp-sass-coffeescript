@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var gulpFilter = require('gulp-filter');
 
 module.exports = generators.Base.extend({
 	constructor: function(){
@@ -20,16 +21,22 @@ module.exports = generators.Base.extend({
 			default : '0.0.1'
 		},{
 			type	: 'checkbox',
-			name	: 'dependencies',
-			message : 'What dependencies do you want to load now',
+			name	: 'includeCode',
+			message : 'What do you want to include',
 			store	: true,
 			choices:[{
-				name: 'NPM',
-				value: 'loadNPM',
+				name: 'CoffeeScript',
+				value: 'includeCoffeeScript',
 				checked: true
-			},{
-				name: 'Bower',
-				value: 'loadBower',
+			}]
+		},{
+			type	: 'checkbox',
+			name	: 'dependencies',
+			message : 'Do you want to load dependencies',
+			store	: true,
+			choices:[{
+				name: 'Load them',
+				value: 'loadDependencies',
 				checked: true
 			}]
 		}];
@@ -37,11 +44,11 @@ module.exports = generators.Base.extend({
 		this.prompt(promts, function (answers) {
 			this.inputProjectName = answers.name;
 			this.inputProjectVersion = answers.version;
-			function shouldLoadDependency(feat) {
+			function getQuestionAnswer(feat) {
 				return answers.dependencies && answers.dependencies.indexOf(feat) !== -1;
 			};
-			this.loadBower = shouldLoadDependency('loadBower');
-			this.loadNPM = shouldLoadDependency('loadNPM');
+			this.loadDependencies = getQuestionAnswer('loadDependencies');
+			this.includeCoffeeScript = getQuestionAnswer('includeCoffeeScript');
 
 			done();
 		}.bind(this));
@@ -52,9 +59,11 @@ module.exports = generators.Base.extend({
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion
+				version: this.inputProjectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
 			}
-			);
+		);
+		
 		this.fs.copyTpl(
 			this.templatePath('webtemplates/**/*'),
 			this.destinationPath('./'),
@@ -62,21 +71,57 @@ module.exports = generators.Base.extend({
 				title: this.inputProjectName,
 				version: this.inputProjectVersion
 			}
-			);
-
+		);
+		var scriptTemplates = this.includeCoffeeScript ? 'gulptemplates/**.*' : 'javascripttemplates/**.*';
+		this.fs.copyTpl(
+			this.templatePath(scriptTemplates),
+			this.destinationPath('./'),
+			{ 
+				title: this.inputProjectName,
+				version: this.inputProjectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
+			}
+		);
 	},
 	dependencies: function () {
-		console.log('Loading dependencies!');
 		//TODO
 		//name: _s.slugify(this.inputProjectName),
 
-		if(this.loadBower){
-			console.log("-------- Loading Dependencies for Bower--------");
+		if(this.loadDependencies){
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-------- Loading Dependencies now--------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
 			this.bowerInstall();
-		}
-		if(this.loadNPM){
-			console.log("-------- Loading Dependencies for NPM --------");
 			this.npmInstall();
+		}
+	},
+	_writeFiles: function(){
+			if(this.loadDependencies){
+		}else{
+			console.log("----------------------------------------------------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("---- Run the following comands to install Dependencies Dependencies now ----");
+			console.log("--------------------------------npm install---------------------------------");
+			console.log("-------------------------------bower install--------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("----------------------------------------------------------------------------");
+			console.log("           _   _                 _                        ");
+			console.log("          | | | |               | |                       ");
+			console.log("          | |_| |__   __ _ _ __ | | __  _   _  ___  _   _ ");
+			console.log("          | __| '_ \\ / _` | '_ \\| |/ / | | | |/ _ \\| | | |");
+			console.log("          | |_| | | | (_| | | | |   <  | |_| | (_) | |_| |");
+			console.log("           \\__|_| |_|\\__,_|_| |_|_|\\_\\  \\__, |\\___/ \\__,_|");
+			console.log("                                         __/ |            ");
+			console.log("                                        |___/             ");
+
+
 		}
 	}
 });

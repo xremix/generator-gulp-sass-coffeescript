@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 	minifyCSS = require('gulp-minify-css'),
 	minifyHTML = require('gulp-minify-html'),
 	uglify = require('gulp-uglify'),
-	coffee = require('gulp-coffee'),
+	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'), <% } %>
 	path = require('gulp-path'),
 	sass = require('gulp-sass'),
 	plumber = require('gulp-plumber'),
@@ -35,11 +35,13 @@ var settings = {
 			src: ['app/scripts/main.js'],
 			distFile: ['main.js'],
 		},
+		<% if(includeCoffeeScript) { %>
 		coffee:{
 			src: ['app/scripts/myfile.coffee'],
 			distFile: ['coffee.js'],
 		},
 		dist: 'dist/scripts'
+		<% } %>
 	},
 	style:{
 		src: ['app/styles/**.scss'],
@@ -61,13 +63,13 @@ var settings = {
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['web', 'script', 'coffee', 'style', 'images', 'icons', 'libraries', 'watch']);
+gulp.task('default', ['web', 'script', <% if(includeCoffeeScript) { %>'coffee'<% } %>, 'style', 'images', 'icons', 'libraries', 'watch']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
 	gulp.watch(settings.paths.web.src, ['web']);
 	gulp.watch(settings.paths.scripts.js.src, ['script']);
-	gulp.watch(settings.paths.scripts.coffee.src, ['coffee']);
+	<% if(includeCoffeeScript) { %>gulp.watch(settings.paths.scripts.coffee.src, ['coffee']);<% } %>
 	gulp.watch(settings.paths.style.src, ['style']);
 	gulp.watch(settings.paths.images.src, ['images']);
 	gulp.watch(settings.paths.icons.srcPath, ['icons']);
@@ -96,6 +98,8 @@ gulp.task('script', function() {
 			.pipe(gulp.dest(settings.paths.scripts.dist));
 	}
 });
+
+<% if(includeCoffeeScript) { %>
 // ----- COFFEE TASK -----
 gulp.task('coffee', function() {
 	for (i = 0; i < settings.paths.scripts.coffee.src.length; i++) { 
@@ -110,6 +114,7 @@ gulp.task('coffee', function() {
 			.pipe(gulp.dest(settings.paths.scripts.dist));
 	}
 });
+<% } %>
 
 // ----- STYLE TASK -----
 gulp.task('style', function() {
