@@ -54,7 +54,7 @@ module.exports = generators.Base.extend({
 	},
 	writing: function () {
 		this.fs.copyTpl(
-			this.templatePath('gulptemplates/**.*'),
+			this.templatePath('gulptemplates/**/*'),
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
@@ -71,7 +71,7 @@ module.exports = generators.Base.extend({
 				version: this.inputProjectVersion
 			}
 		);
-		var scriptTemplates = this.includeCoffeeScript ? 'gulptemplates/**.*' : 'javascripttemplates/**.*';
+		var scriptTemplates = this.includeCoffeeScript ? 'gulptemplates/**/*' : 'javascripttemplates/**/*';
 		this.fs.copyTpl(
 			this.templatePath(scriptTemplates),
 			this.destinationPath('./'),
@@ -94,13 +94,11 @@ module.exports = generators.Base.extend({
 			console.log("-----------------------------------------");
 			console.log("-----------------------------------------");
 			console.log("-----------------------------------------");
-			this.bowerInstall();
-			this.npmInstall();
+			this.installDependencies();
 		}
 	},
 	_writeFiles: function(){
-			if(this.loadDependencies){
-		}else{
+		if(!this.loadDependencies){
 			console.log("----------------------------------------------------------------------------");
 			console.log("----------------------------------------------------------------------------");
 			console.log("----------------------------------------------------------------------------");
@@ -111,16 +109,14 @@ module.exports = generators.Base.extend({
 			console.log("----------------------------------------------------------------------------");
 			console.log("----------------------------------------------------------------------------");
 			console.log("----------------------------------------------------------------------------");
-			console.log("           _   _                 _                        ");
-			console.log("          | | | |               | |                       ");
-			console.log("          | |_| |__   __ _ _ __ | | __  _   _  ___  _   _ ");
-			console.log("          | __| '_ \\ / _` | '_ \\| |/ / | | | |/ _ \\| | | |");
-			console.log("          | |_| | | | (_| | | | |   <  | |_| | (_) | |_| |");
-			console.log("           \\__|_| |_|\\__,_|_| |_|_|\\_\\  \\__, |\\___/ \\__,_|");
-			console.log("                                         __/ |            ");
-			console.log("                                        |___/             ");
-
-
 		}
+		console.log("           _   _                 _                        ");
+		console.log("          | | | |               | |                       ");
+		console.log("          | |_| |__   __ _ _ __ | | __  _   _  ___  _   _ ");
+		console.log("          | __| '_ \\ / _` | '_ \\| |/ / | | | |/ _ \\| | | |");
+		console.log("          | |_| | | | (_| | | | |   <  | |_| | (_) | |_| |");
+		console.log("           \\__|_| |_|\\__,_|_| |_|_|\\_\\  \\__, |\\___/ \\__,_|");
+		console.log("                                         __/ |            ");
+		console.log("                                        |___/             ");
 	}
 });
