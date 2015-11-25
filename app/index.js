@@ -1,5 +1,4 @@
 var generators = require('yeoman-generator');
-var gulpFilter = require('gulp-filter');
 
 module.exports = generators.Base.extend({
 	constructor: function(){
