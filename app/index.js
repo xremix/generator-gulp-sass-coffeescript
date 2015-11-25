@@ -48,46 +48,27 @@ module.exports = generators.Base.extend({
 	},
 	writing: function () {
 		this.fs.copyTpl(
-			this.templatePath('**/*'),
+			this.templatePath('gulptemplates/**.*'),
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
 				version: this.inputProjectVersion
 			}
 			);
-		this.template('temptask.file', 'Gulpfile.js');
+		this.fs.copyTpl(
+			this.templatePath('webtemplates/**/*'),
+			this.destinationPath('./'),
+			{ 
+				title: this.inputProjectName,
+				version: this.inputProjectVersion
+			}
+			);
 
 	},
 	dependencies: function () {
 		console.log('Loading dependencies!');
 		//TODO
 		//name: _s.slugify(this.inputProjectName),
-		 var bowerJson = {
-	        name: this.inputProjectName,
-	        private: true,
-	        authors:[],
-	        license:"MIT",
-	        main:[],
-	        keywords:[
-	        	"gulp-sass-coffeescript"
-	        ],
-	        "ignore": [
-			    "**/.*",
-			    "node_modules",
-			    "bower_components",
-			    "test",
-			    "tests"
-			  ],
-	        dependencies: {
-	        	"jquery": "~2.1.4",
-			    "bootstrap": "~3.3.5",
-			    "font-awesome": "fontawesome#~4.4.0" 
-	        }
-	      };
-        this.fs.writeJSON('bower.json', bowerJson);
-		
-
-
 
 		if(this.loadBower){
 			console.log("-------- Loading Dependencies for Bower--------");
