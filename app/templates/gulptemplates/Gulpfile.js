@@ -40,8 +40,8 @@ var settings = {
 			src: ['app/scripts/myfile.coffee'],
 			distFile: ['coffee.js'],
 		},
-		dist: 'dist/scripts'
 		<% } %>
+		dist: 'dist/scripts'
 	},
 	style:{
 		src: ['app/styles/**.scss'],
@@ -63,7 +63,7 @@ var settings = {
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['web', 'script', <% if(includeCoffeeScript) { %>'coffee'<% } %>, 'style', 'images', 'icons', 'libraries', 'watch']);
+gulp.task('default', ['web', 'script',<% if(includeCoffeeScript) { %>'coffee', <% } %> 'style', 'images', 'icons', 'libraries', 'watch']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
