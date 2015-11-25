@@ -27,7 +27,7 @@ function make_build {
   # 1. Make a temporary directory for doing our work.
 
   REV=`git rev-list master -1`
-  BUILD_DIR=`mktemp -d --tmpdir npm-publish-safely.$REV.XXXXXX`
+  BUILD_DIR=`mktemp -d -t npm-publish-safely.$REV.XXXXXX`
   echo "Building in directory: $BUILD_DIR"
 
 
