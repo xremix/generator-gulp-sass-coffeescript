@@ -1,6 +1,6 @@
 {
   "name": "generator-gulp-sass-coffeescript",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Scaffold a Website using Gulp, Sass, Coffeescript, Bootstrap and Fontawesome",
   "main": "app/index.js",
   "scripts": {
