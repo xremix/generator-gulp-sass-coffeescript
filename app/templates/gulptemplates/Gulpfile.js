@@ -37,8 +37,8 @@ var settings = {
 		},
 		<% if(includeCoffeeScript) { %>
 		coffee:{
-			src: ['app/scripts/myfile.coffee'],
-			distFile: ['coffee.js'],
+			src: ['app/scripts/main.coffee'],
+			distFile: ['main.js'],
 		},
 		<% } %>
 		dist: 'dist/scripts'

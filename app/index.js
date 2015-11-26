@@ -43,11 +43,14 @@ module.exports = generators.Base.extend({
 		this.prompt(promts, function (answers) {
 			this.inputProjectName = answers.name;
 			this.inputProjectVersion = answers.version;
-			function getQuestionAnswer(feat) {
+			function getDependencyAnswer(feat) {
 				return answers.dependencies && answers.dependencies.indexOf(feat) !== -1;
 			};
-			this.loadDependencies = getQuestionAnswer('loadDependencies');
-			this.includeCoffeeScript = getQuestionAnswer('includeCoffeeScript');
+			function getIncludeAnswer(feat) {
+				return answers.includeCode && answers.includeCode.indexOf(feat) !== -1;
+			};
+			this.loadDependencies = getDependencyAnswer('loadDependencies');
+			this.includeCoffeeScript = getIncludeAnswer('includeCoffeeScript');
 
 			done();
 		}.bind(this));
@@ -68,10 +71,17 @@ module.exports = generators.Base.extend({
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion
+				version: this.inputProjectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
 			}
 		);
-		var scriptTemplates = this.includeCoffeeScript ? 'gulptemplates/**/*' : 'javascripttemplates/**/*';
+
+		var scriptTemplates = this.includeCoffeeScript ? 'coffeescripttemplates/**/*' : 'javascripttemplates/**/*';
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
 		this.fs.copyTpl(
 			this.templatePath(scriptTemplates),
 			this.destinationPath('./'),
@@ -96,27 +106,5 @@ module.exports = generators.Base.extend({
 			console.log("-----------------------------------------");
 			this.installDependencies();
 		}
-	},
-	_writeFiles: function(){
-		if(!this.loadDependencies){
-			console.log("----------------------------------------------------------------------------");
-			console.log("----------------------------------------------------------------------------");
-			console.log("----------------------------------------------------------------------------");
-			console.log("----------------------------------------------------------------------------");
-			console.log("---- Run the following comands to install Dependencies Dependencies now ----");
-			console.log("--------------------------------npm install---------------------------------");
-			console.log("-------------------------------bower install--------------------------------");
-			console.log("----------------------------------------------------------------------------");
-			console.log("----------------------------------------------------------------------------");
-			console.log("----------------------------------------------------------------------------");
-		}
-		console.log("           _   _                 _                        ");
-		console.log("          | | | |               | |                       ");
-		console.log("          | |_| |__   __ _ _ __ | | __  _   _  ___  _   _ ");
-		console.log("          | __| '_ \\ / _` | '_ \\| |/ / | | | |/ _ \\| | | |");
-		console.log("          | |_| | | | (_| | | | |   <  | |_| | (_) | |_| |");
-		console.log("           \\__|_| |_|\\__,_|_| |_|_|\\_\\  \\__, |\\___/ \\__,_|");
-		console.log("                                         __/ |            ");
-		console.log("                                        |___/             ");
 	}
 });
