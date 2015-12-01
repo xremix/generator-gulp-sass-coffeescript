@@ -26,7 +26,7 @@ var settings = {
 	web:{
 		src:[
 			'app/**/*.htm*',
-			'app/**/*.php'
+			//'app/**/*.php'
 		],
 		dist:'dist'
 	},

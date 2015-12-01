@@ -1,17 +1,19 @@
 #Gulp Sass Coffeescript Yeoman generator
-WIP
 
-##TODO
-- [x] Setup Dependencies
-- [x] Setup Code structure
-- [ ] Setup code as Yeoman Generator
-- [x] Build gulp tasks
-- [x] - SASS / SCSS
-- [x] - CoffeeScript
-- [x] Make Font Awesome working
-- [ ] Optimize script tasks
-- [ ] - Remove JS? (CoffeScript only)
-- [ ] - Optimize loop / concat functionality?
+##Info
+This generator creates a Web Application based on Bootstrap, by using Gulp to build your code. Take a look at the features out more.
+
+**NOTE!**
+You can disable CoffeeScript if you want do develop using plain JS.
+
+##Installation
+- Install [node](https://nodejs.org/en/)
+- Install [yeoman](http://yeoman.io) using `npm install yeoman -g`
+
+
+- Install this generator using `npm install --global generator-gulp-sass-coffeescript`
+- Run generator in current project folder using `yo`
+- Run `gulp` to build your Web App
 
 ##Features
 - gulp tasks
@@ -19,6 +21,6 @@ WIP
 - jquery
 - sass compiler
 - coffee script compiler
-- Minifier for Html, CSS and JS
+- Minifier for HTML, CSS and JS
 - CSS Auto Prefixes
 - Image optimization
