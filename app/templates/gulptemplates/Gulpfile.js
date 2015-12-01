@@ -5,8 +5,8 @@ var gulp = require('gulp'),
 	minifyCSS = require('gulp-minify-css'),
 	minifyHTML = require('gulp-minify-html'),
 	uglify = require('gulp-uglify'),
-	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'), <% } %>
-	path = require('gulp-path'),
+	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'),
+	<% } %>path = require('gulp-path'),
 	sass = require('gulp-sass'),
 	plumber = require('gulp-plumber'),
 	flatten = require('gulp-flatten'),
@@ -32,16 +32,12 @@ var settings = {
 	},
 	scripts:{
 		js:{
-			src: ['app/scripts/main.js'],
-			distFile: ['main.js'],
+			src: 'app/scripts/**/*.js'
 		},
-		<% if(includeCoffeeScript) { %>
-		coffee:{
-			src: ['app/scripts/main.coffee'],
-			distFile: ['main.js'],
+		<% if(includeCoffeeScript) { %>coffee:{
+			src: 'app/scripts/**/*.coffee'
 		},
-		<% } %>
-		dist: 'dist/scripts'
+		<% } %>dist: 'dist/scripts'
 	},
 	style:{
 		src: ['app/styles/**.scss'],
@@ -87,32 +83,26 @@ gulp.task('web', function(){
 
 // ----- SCRIPT TASK -----
 gulp.task('script', function() {
-	for (i = 0; i < settings.paths.scripts.js.src.length; i++) { 
-		gulp.src(settings.paths.scripts.js.src[i])
-			.pipe(plumber())
-			.pipe(gulpif(settings.production, uglify()))
-			.pipe(concat(settings.paths.scripts.js.distFile[i]))
-			.pipe(gulpif(settings.production, rename({
-				suffix: ".min"
-			})))
-			.pipe(gulp.dest(settings.paths.scripts.dist));
-	}
+	gulp.src(settings.paths.scripts.js.src)
+		.pipe(plumber())
+		.pipe(gulpif(settings.production, uglify()))
+		.pipe(gulpif(settings.production, rename({
+			suffix: ".min"
+		})))
+		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
 
 <% if(includeCoffeeScript) { %>
 // ----- COFFEE TASK -----
 gulp.task('coffee', function() {
-	for (i = 0; i < settings.paths.scripts.coffee.src.length; i++) { 
-		gulp.src(settings.paths.scripts.coffee.src[i])
-			.pipe(plumber())
-			.pipe(coffee({bare: true}))
-			.pipe(gulpif(settings.production, uglify()))
-			.pipe(concat(settings.paths.scripts.coffee.distFile[i]))
-			.pipe(gulpif(settings.production, rename({
-				suffix: ".min"
-			})))
-			.pipe(gulp.dest(settings.paths.scripts.dist));
-	}
+	gulp.src(settings.paths.scripts.coffee.src)
+		.pipe(plumber())
+		.pipe(coffee({bare: true}))
+		.pipe(gulpif(settings.production, uglify()))
+		.pipe(gulpif(settings.production, rename({
+			suffix: ".min"
+		})))
+		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
 <% } %>
 
