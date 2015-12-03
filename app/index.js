@@ -7,6 +7,7 @@ module.exports = generators.Base.extend({
 	},
 	promting: function(){
 		var done = this.async();
+		this.projectVersion = "0.0.1";
 
 		var promts = [{
 			type    : 'input',
@@ -14,88 +15,91 @@ module.exports = generators.Base.extend({
 			message : 'Project Name',
 			default : this.appname
 		},{
-			type    : 'input',
-			name    : 'version',
-			message : 'Project Version',
-			default : '0.0.1'
+			type	: 'checkbox',
+			name	: 'includeCode',
+			message : 'What do you want to include',
+			store	: true,
+			choices:[{
+				name: 'CoffeeScript',
+				value: 'includeCoffeeScript',
+				checked: true
+			}]
 		},{
 			type	: 'checkbox',
 			name	: 'dependencies',
-			message : 'What dependencies do you want to load now',
+			message : 'Do you want to load dependencies',
 			store	: true,
 			choices:[{
-				name: 'NPM',
-				value: 'loadNPM',
-				checked: true
-			},{
-				name: 'Bower',
-				value: 'loadBower',
+				name: 'Load them',
+				value: 'loadDependencies',
 				checked: true
 			}]
 		}];
 
 		this.prompt(promts, function (answers) {
 			this.inputProjectName = answers.name;
-			this.inputProjectVersion = answers.version;
-			function shouldLoadDependency(feat) {
+			function getDependencyAnswer(feat) {
 				return answers.dependencies && answers.dependencies.indexOf(feat) !== -1;
 			};
-			this.loadBower = shouldLoadDependency('loadBower');
-			this.loadNPM = shouldLoadDependency('loadNPM');
+			function getIncludeAnswer(feat) {
+				return answers.includeCode && answers.includeCode.indexOf(feat) !== -1;
+			};
+			this.loadDependencies = getDependencyAnswer('loadDependencies');
+			this.includeCoffeeScript = getIncludeAnswer('includeCoffeeScript');
 
 			done();
 		}.bind(this));
 	},
 	writing: function () {
 		this.fs.copyTpl(
-			this.templatePath('**/*'),
+			this.templatePath('gulptemplates/**/*'),
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion
+				version: this.projectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
 			}
-			);
-		this.template('_Gulpfile.js', 'Gulpfile.js');
+		);
+		
+		this.fs.copyTpl(
+			this.templatePath('webtemplates/**/*'),
+			this.destinationPath('./'),
+			{ 
+				title: this.inputProjectName,
+				version: this.projectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
+			}
+		);
 
+		var scriptTemplates = this.includeCoffeeScript ? 'coffeescripttemplates/**/*' : 'javascripttemplates/**/*';
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		console.log(scriptTemplates);
+		this.fs.copyTpl(
+			this.templatePath(scriptTemplates),
+			this.destinationPath('./'),
+			{ 
+				title: this.inputProjectName,
+				version: this.projectVersion,
+				includeCoffeeScript: this.includeCoffeeScript
+			}
+		);
 	},
 	dependencies: function () {
-		console.log('Loading dependencies!');
 		//TODO
 		//name: _s.slugify(this.inputProjectName),
-		 var bowerJson = {
-	        name: this.inputProjectName,
-	        private: true,
-	        authors:[],
-	        license:"MIT",
-	        main:[],
-	        keywords:[
-	        	"gulp-sass-coffeescript"
-	        ],
-	        "ignore": [
-			    "**/.*",
-			    "node_modules",
-			    "bower_components",
-			    "test",
-			    "tests"
-			  ],
-	        dependencies: {
-	        	"jquery": "~2.1.4",
-			    "bootstrap": "~3.3.5",
-			    "font-awesome": "fontawesome#~4.4.0" 
-	        }
-	      };
-        this.fs.writeJSON('bower.json', bowerJson);
-		
 
-
-
-		if(this.loadBower){
-			console.log("-------- Loading Dependencies for Bower--------");
-			this.bowerInstall();
-		}
-		if(this.loadNPM){
-			console.log("-------- Loading Dependencies for NPM --------");
-			this.npmInstall();
+		if(this.loadDependencies){
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-------- Loading Dependencies now--------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			console.log("-----------------------------------------");
+			this.installDependencies();
 		}
 	}
 });

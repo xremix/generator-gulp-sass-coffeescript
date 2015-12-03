@@ -2,5 +2,5 @@
 	setTimeout(function(){
 	    var newSiteName = "Hello JavaScript!";
 	    document.querySelector("h1").innerText = newSiteName;
-	},500);
+	},1000);
 })();

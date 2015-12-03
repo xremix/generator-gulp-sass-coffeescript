@@ -5,8 +5,8 @@ var gulp = require('gulp'),
 	minifyCSS = require('gulp-minify-css'),
 	minifyHTML = require('gulp-minify-html'),
 	uglify = require('gulp-uglify'),
-	coffee = require('gulp-coffee'),
-	path = require('gulp-path'),
+	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'),
+	<% } %>path = require('gulp-path'),
 	sass = require('gulp-sass'),
 	plumber = require('gulp-plumber'),
 	flatten = require('gulp-flatten'),
@@ -26,20 +26,19 @@ var settings = {
 	web:{
 		src:[
 			'app/**/*.htm*',
-			'app/**/*.php'
+			//'app/**/*.php'
 		],
 		dist:'dist'
 	},
 	scripts:{
 		js:{
-			src: ['app/scripts/main.js'],
-			distFile: ['main.js'],
+			src: 'app/scripts/**/*.js'
 		},
-		coffee:{
-			src: ['app/scripts/myfile.coffee'],
-			distFile: ['coffee.js'],
+		<% if(includeCoffeeScript) { %>coffee:{
+			src: 'app/scripts/**/*.coffee'
 		},
-		dist: 'dist/scripts'
+		<% } %>dist: 'dist/scripts',
+		distFile: 'main.js'
 	},
 	style:{
 		src: ['app/styles/**.scss'],
@@ -61,13 +60,13 @@ var settings = {
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['web', 'script', 'coffee', 'style', 'images', 'icons', 'libraries', 'watch']);
+gulp.task('default', ['web', 'script',<% if(includeCoffeeScript) { %>'coffee', <% } %> 'style', 'images', 'icons', 'libraries', 'watch']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
 	gulp.watch(settings.paths.web.src, ['web']);
 	gulp.watch(settings.paths.scripts.js.src, ['script']);
-	gulp.watch(settings.paths.scripts.coffee.src, ['coffee']);
+	<% if(includeCoffeeScript) { %>gulp.watch(settings.paths.scripts.coffee.src, ['coffee']);<% } %>
 	gulp.watch(settings.paths.style.src, ['style']);
 	gulp.watch(settings.paths.images.src, ['images']);
 	gulp.watch(settings.paths.icons.srcPath, ['icons']);
@@ -85,38 +84,37 @@ gulp.task('web', function(){
 
 // ----- SCRIPT TASK -----
 gulp.task('script', function() {
-	for (i = 0; i < settings.paths.scripts.js.src.length; i++) { 
-		gulp.src(settings.paths.scripts.js.src[i])
-			.pipe(plumber())
-			.pipe(gulpif(settings.production, uglify()))
-			.pipe(concat(settings.paths.scripts.js.distFile[i]))
-			.pipe(gulpif(settings.production, rename({
-				suffix: ".min"
-			})))
-			.pipe(gulp.dest(settings.paths.scripts.dist));
-	}
+	gulp.src(settings.paths.scripts.js.src)
+		.pipe(plumber())
+		//.pipe(concat(settings.paths.scripts.distFile))
+		.pipe(gulpif(settings.production, uglify()))
+		.pipe(gulpif(settings.production, rename({
+			suffix: ".min"
+		})))
+		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
+
+<% if(includeCoffeeScript) { %>
 // ----- COFFEE TASK -----
 gulp.task('coffee', function() {
-	for (i = 0; i < settings.paths.scripts.coffee.src.length; i++) { 
-		gulp.src(settings.paths.scripts.coffee.src[i])
-			.pipe(plumber())
-			.pipe(coffee({bare: true}))
-			.pipe(gulpif(settings.production, uglify()))
-			.pipe(concat(settings.paths.scripts.coffee.distFile[i]))
-			.pipe(gulpif(settings.production, rename({
-				suffix: ".min"
-			})))
-			.pipe(gulp.dest(settings.paths.scripts.dist));
-	}
+	gulp.src(settings.paths.scripts.coffee.src)
+		.pipe(plumber())
+		.pipe(coffee({bare: true}))
+		//.pipe(concat(settings.paths.scripts.distFile))
+		.pipe(gulpif(settings.production, uglify()))
+		.pipe(gulpif(settings.production, rename({
+			suffix: ".min"
+		})))
+		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
+<% } %>
 
 // ----- STYLE TASK -----
 gulp.task('style', function() {
 	gulp.src(settings.paths.style.src)
 	.pipe(plumber())
 	.pipe(sass().on('error', sass.logError))
-	.pipe(concat(settings.paths.style.distFile))
+	//.pipe(concat(settings.paths.style.distFile))
 	.pipe(autoprefixer({
 		browsers: ['last 3 versions'],
 		cascade: false
