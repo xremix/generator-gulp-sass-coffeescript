@@ -7,17 +7,13 @@ module.exports = generators.Base.extend({
 	},
 	promting: function(){
 		var done = this.async();
+		this.projectVersion = "0.0.1";
 
 		var promts = [{
 			type    : 'input',
 			name    : 'name',
 			message : 'Project Name',
 			default : this.appname
-		},{
-			type    : 'input',
-			name    : 'version',
-			message : 'Project Version',
-			default : '0.0.1'
 		},{
 			type	: 'checkbox',
 			name	: 'includeCode',
@@ -42,7 +38,6 @@ module.exports = generators.Base.extend({
 
 		this.prompt(promts, function (answers) {
 			this.inputProjectName = answers.name;
-			this.inputProjectVersion = answers.version;
 			function getDependencyAnswer(feat) {
 				return answers.dependencies && answers.dependencies.indexOf(feat) !== -1;
 			};
@@ -61,7 +56,7 @@ module.exports = generators.Base.extend({
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion,
+				version: this.projectVersion,
 				includeCoffeeScript: this.includeCoffeeScript
 			}
 		);
@@ -71,7 +66,7 @@ module.exports = generators.Base.extend({
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion,
+				version: this.projectVersion,
 				includeCoffeeScript: this.includeCoffeeScript
 			}
 		);
@@ -87,7 +82,7 @@ module.exports = generators.Base.extend({
 			this.destinationPath('./'),
 			{ 
 				title: this.inputProjectName,
-				version: this.inputProjectVersion,
+				version: this.projectVersion,
 				includeCoffeeScript: this.includeCoffeeScript
 			}
 		);

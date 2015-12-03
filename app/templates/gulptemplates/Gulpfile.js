@@ -37,7 +37,8 @@ var settings = {
 		<% if(includeCoffeeScript) { %>coffee:{
 			src: 'app/scripts/**/*.coffee'
 		},
-		<% } %>dist: 'dist/scripts'
+		<% } %>dist: 'dist/scripts',
+		distFile: 'main.js'
 	},
 	style:{
 		src: ['app/styles/**.scss'],
@@ -85,6 +86,7 @@ gulp.task('web', function(){
 gulp.task('script', function() {
 	gulp.src(settings.paths.scripts.js.src)
 		.pipe(plumber())
+		//.pipe(concat(settings.paths.scripts.distFile))
 		.pipe(gulpif(settings.production, uglify()))
 		.pipe(gulpif(settings.production, rename({
 			suffix: ".min"
@@ -98,6 +100,7 @@ gulp.task('coffee', function() {
 	gulp.src(settings.paths.scripts.coffee.src)
 		.pipe(plumber())
 		.pipe(coffee({bare: true}))
+		//.pipe(concat(settings.paths.scripts.distFile))
 		.pipe(gulpif(settings.production, uglify()))
 		.pipe(gulpif(settings.production, rename({
 			suffix: ".min"
@@ -111,7 +114,7 @@ gulp.task('style', function() {
 	gulp.src(settings.paths.style.src)
 	.pipe(plumber())
 	.pipe(sass().on('error', sass.logError))
-	.pipe(concat(settings.paths.style.distFile))
+	//.pipe(concat(settings.paths.style.distFile))
 	.pipe(autoprefixer({
 		browsers: ['last 3 versions'],
 		cascade: false
