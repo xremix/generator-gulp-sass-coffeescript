@@ -1,10 +1,11 @@
 var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
 	concat = require('gulp-concat'),
-	gulpif = require('gulp-if'),
+	gulpIf = require('gulp-if'),
 	minifyCSS = require('gulp-minify-css'),
 	minifyHTML = require('gulp-minify-html'),
 	uglify = require('gulp-uglify'),
+	beautify = require('gulp-beautify'),
 	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'),
 	<% } %>path = require('gulp-path'),
 	sass = require('gulp-sass'),
@@ -77,7 +78,7 @@ gulp.task('watch', function(){
 gulp.task('web', function(){
 	gulp.src(settings.paths.web.src)
 	.pipe(plumber())
-	.pipe(gulpif(settings.production, minifyHTML({})))
+	.pipe(gulpIf(settings.production, minifyHTML({})))
 	.pipe(gulp.dest(settings.paths.web.dist));
 });
 
@@ -85,10 +86,12 @@ gulp.task('web', function(){
 gulp.task('script', function() {
 	gulp.src(settings.paths.scripts.js.src)
 		.pipe(plumber())
-		.pipe(gulpif(settings.production, uglify()))
-		.pipe(gulpif(settings.production, rename({
+		.pipe(beautify())
+		.pipe(gulp.dest(settings.paths.scripts.dist))
+		.pipe(gulpIf(settings.production, uglify()))
+		.pipe(rename({
 			suffix: ".min"
-		})))
+		}))
 		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
 
@@ -98,10 +101,12 @@ gulp.task('coffee', function() {
 	gulp.src(settings.paths.scripts.coffee.src)
 		.pipe(plumber())
 		.pipe(coffee({bare: true}))
-		.pipe(gulpif(settings.production, uglify()))
-		.pipe(gulpif(settings.production, rename({
+		.pipe(beautify())
+		.pipe(gulp.dest(settings.paths.scripts.dist))
+		.pipe(gulpIf(settings.production, uglify()))
+		.pipe(rename({
 			suffix: ".min"
-		})))
+		}))
 		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
 <% } %>
@@ -116,10 +121,11 @@ gulp.task('style', function() {
 		browsers: ['last 3 versions'],
 		cascade: false
 		}))
-	.pipe(gulpif(settings.production, minifyCSS()))
-	.pipe(gulpif(settings.production, rename({
+	.pipe(gulp.dest(settings.paths.style.dist))
+	.pipe(gulpIf(settings.production, minifyCSS()))
+	.pipe(rename({
 		suffix: ".min"
-	})))
+	}))
 	.pipe(gulp.dest(settings.paths.style.dist));
 });
 
@@ -172,7 +178,7 @@ gulp.task('libraries', function() {
 
 gulp.task('icons', function() {
 	return gulp.src(settings.paths.icons.srcPath)
-	.pipe(gulp.dest(settings.paths.icons.dist));
+				.pipe(gulp.dest(settings.paths.icons.dist));
 });
 
 

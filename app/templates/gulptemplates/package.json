@@ -7,7 +7,7 @@
   ],
   "keywords": [],
   "dependencies": {
-    "bower": "^1.6.6",
+    "bower": "^1.7.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
@@ -24,7 +24,8 @@
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.5",
     "imagemin-pngquant": "^4.2.0",
-    "main-bower-files": "^2.9.0"
+    "main-bower-files": "^2.9.0",
+    "gulp-beautify": "^2.0.0"
     <% if(includeCoffeeScript) { %>,
     "gulp-coffee": "^2.3.1"
     <% } %>
