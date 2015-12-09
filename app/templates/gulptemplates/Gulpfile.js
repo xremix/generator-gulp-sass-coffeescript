@@ -91,7 +91,7 @@ gulp.task('script', function() {
 		//.pipe(concat(settings.paths.scripts.distFile))
 		.pipe(gulp.dest(settings.paths.scripts.dist))
 		.pipe(gulpIf(settings.production, uglify()))
-		.pipe(gulpif(settings.production, rename({
+		.pipe(rename({
 			suffix: ".min"
 		}))
 		.pipe(gulp.dest(settings.paths.scripts.dist));
@@ -106,10 +106,10 @@ gulp.task('coffee', function() {
 		//.pipe(concat(settings.paths.scripts.distFile))
 		.pipe(beautify())
 		.pipe(gulp.dest(settings.paths.scripts.dist))
-		.pipe(gulpif(settings.production, uglify()))
+		.pipe(gulpIf(settings.production, uglify()))
 		.pipe(rename({
 			suffix: ".min"
-		})
+		}))
 		.pipe(gulp.dest(settings.paths.scripts.dist));
 });
 <% } %>
