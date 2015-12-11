@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var _s = require('underscore.string');
 
 module.exports = generators.Base.extend({
 	constructor: function(){
@@ -13,7 +14,7 @@ module.exports = generators.Base.extend({
 			type    : 'input',
 			name    : 'name',
 			message : 'Project Name',
-			default : this.appname
+			default : _s.slugify(this.appname)
 		},{
 			type	: 'checkbox',
 			name	: 'includeCode',

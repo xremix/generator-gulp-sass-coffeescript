@@ -1,6 +1,6 @@
 {
   "name": "generator-gulp-sass-coffeescript",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Scaffold a Website using Gulp, Sass, Coffeescript, Bootstrap and Fontawesome",
   "main": "app/index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   "author": "xremix <toni-hoffmann@xremix.de> (xremix.de)",
   "license": "ISC",
   "dependencies": {
-    "yeoman-generator": "^0.21.1"
+    "yeoman-generator": "^0.21.1",
+     "underscore.string": "^3.2.2"
   }
 }
