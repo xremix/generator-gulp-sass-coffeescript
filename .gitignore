@@ -1,7 +1,7 @@
+*.log
 node_modules/
 bower_components/
 app/templates/gulptemplates/node_modules/
 app/templates/gulptemplates/bower_components/
-*.log
 build/
 dist/
