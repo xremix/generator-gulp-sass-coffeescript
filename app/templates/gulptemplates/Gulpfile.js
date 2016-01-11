@@ -6,7 +6,8 @@ var gulp = require('gulp'),
 	minifyHTML = require('gulp-minify-html'),
 	uglify = require('gulp-uglify'),
 	beautify = require('gulp-beautify'),
-	<% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'),
+	<% if(includeBabel) { %>babel = require('gulp-babel'),
+	<% } %><% if(includeCoffeeScript) { %>coffee = require('gulp-coffee'),
 	<% } %>path = require('gulp-path'),
 	sass = require('gulp-sass'),
 	plumber = require('gulp-plumber'),
@@ -17,7 +18,6 @@ var gulp = require('gulp'),
 	watch = require('gulp-watch'),
 	imagemin = require('gulp-imagemin'),
 	pngquant = require('imagemin-pngquant');
-
 
 // ----- SETTINGS -----
 var settings = {
@@ -61,7 +61,8 @@ var settings = {
 };
 
 // ----- DEFAULT TASK -----
-gulp.task('default', ['web', 'script',<% if(includeCoffeeScript) { %>'coffee', <% } %> 'style', 'images', 'icons', 'libraries', 'watch']);
+gulp.task('default', ['build', 'watch']);
+gulp.task('build', ['web', 'script',<% if(includeCoffeeScript) { %>'coffee', <% } %> 'style', 'images', 'icons', 'libraries']);
 
 // ----- WATCH TASK -----
 gulp.task('watch', function(){
@@ -86,7 +87,10 @@ gulp.task('web', function(){
 // ----- SCRIPT TASK -----
 gulp.task('script', function() {
 	gulp.src(settings.paths.scripts.js.src)
-		.pipe(plumber())
+		.pipe(plumber())<% if(includeBabel) { %>
+		.pipe(babel({
+			presets: ['es2015']
+		}))<% } %>
 		.pipe(beautify())
 		//.pipe(concat(settings.paths.scripts.distFile))
 		.pipe(gulp.dest(settings.paths.scripts.dist))

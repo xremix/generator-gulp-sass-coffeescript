@@ -18,11 +18,15 @@ module.exports = generators.Base.extend({
 		},{
 			type	: 'checkbox',
 			name	: 'includeCode',
-			message : 'What do you want to include',
+			message : 'Wich features do you want to include',
 			store	: true,
 			choices:[{
 				name: 'CoffeeScript',
 				value: 'includeCoffeeScript',
+				checked: true
+			},{
+				name: 'Babel (ES6 Transpiler)',
+				value: 'includeBabel',
 				checked: true
 			}]
 		},{
@@ -47,6 +51,7 @@ module.exports = generators.Base.extend({
 			};
 			this.loadDependencies = getDependencyAnswer('loadDependencies');
 			this.includeCoffeeScript = getIncludeAnswer('includeCoffeeScript');
+			this.includeBabel = getIncludeAnswer('includeBabel');
 
 			done();
 		}.bind(this));
@@ -58,7 +63,8 @@ module.exports = generators.Base.extend({
 			{ 
 				title: this.inputProjectName,
 				version: this.projectVersion,
-				includeCoffeeScript: this.includeCoffeeScript
+				includeCoffeeScript: this.includeCoffeeScript,
+				includeBabel: this.includeBabel
 			}
 		);
 		
@@ -68,16 +74,12 @@ module.exports = generators.Base.extend({
 			{ 
 				title: this.inputProjectName,
 				version: this.projectVersion,
-				includeCoffeeScript: this.includeCoffeeScript
+				includeCoffeeScript: this.includeCoffeeScript,
+				includeBabel: this.includeBabel
 			}
 		);
 
-		var scriptTemplates = this.includeCoffeeScript ? 'coffeescripttemplates/**/*' : 'javascripttemplates/**/*';
-		console.log(scriptTemplates);
-		console.log(scriptTemplates);
-		console.log(scriptTemplates);
-		console.log(scriptTemplates);
-		console.log(scriptTemplates);
+		var scriptTemplates = this.includeCoffeeScript ? 'coffeescripttemplates/**/*' : this.includeBabel ? 'babeltemplates/**/*' : 'javascripttemplates/**/*';
 		this.fs.copyTpl(
 			this.templatePath(scriptTemplates),
 			this.destinationPath('./'),
@@ -89,9 +91,6 @@ module.exports = generators.Base.extend({
 		);
 	},
 	dependencies: function () {
-		//TODO
-		//name: _s.slugify(this.inputProjectName),
-
 		if(this.loadDependencies){
 			console.log("-----------------------------------------");
 			console.log("-----------------------------------------");

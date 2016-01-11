@@ -1,4 +1,4 @@
-#Gulp Sass Coffeescript Yeoman generator
+#Gulp Sass CoffeeScript Yeoman generator
 
 ##Info
 This generator creates a Web Application based on Bootstrap, by using Gulp to build your code. Take a look at the features out more.
@@ -6,21 +6,27 @@ This generator creates a Web Application based on Bootstrap, by using Gulp to bu
 **NOTE!**
 You can disable CoffeeScript if you want do develop using plain JS.
 
+![Sample Screenshot](https://raw.githubusercontent.com/xremix/generator-gulp-sass-coffeescript/master/Sample-Screenshot.png)
+
+
 ##Installation
-- Install [node](https://nodejs.org/en/)
-- Install [yeoman](http://yeoman.io) using `npm install yeoman -g`
-
-
+- Install [Node.js](https://nodejs.org/en/)
+- Install [Yeoman](http://yeoman.io) using `npm install yeoman -g`
 - Install this generator using `npm install --global generator-gulp-sass-coffeescript`
+
+##Usage
 - Run generator in current project folder using `yo`
 - Run `gulp` to build your Web App
 
 ##Features
-- gulp tasks
-- twitter bootstrap
-- jquery
-- sass compiler
-- coffee script compiler
+- [Gulp](http://gulpjs.com) Tasks
+- [Twitter Bootstrap](http://getbootstrap.com)
+- [jQuery](https://jquery.com)
+- [Sass](http://sass-lang.com) Transpiler
+- [CoffeeScript](http://coffeescript.org) Transpiler *(optional)*
+- ECMAScript2015 (ES6) Transpiler *(optional)*
 - Minifier for HTML, CSS and JS
 - CSS Auto Prefixes
 - Image optimization
+
+*For a full list of features check out the [NPM](https://github.com/xremix/generator-gulp-sass-coffeescript/blob/master/app/templates/gulptemplates/package.json) and [Bower](https://github.com/xremix/generator-gulp-sass-coffeescript/blob/master/app/templates/gulptemplates/bower.json) dependencies*
