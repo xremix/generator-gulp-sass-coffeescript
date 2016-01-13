@@ -1,13 +1,20 @@
 {
   "name": "generator-gulp-sass-coffeescript",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Scaffold a Website using Gulp, Sass, Coffeescript, Bootstrap and Fontawesome",
   "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "gulp",
+    "sass",
+    "coffeescript",
+    "bootstrap",
+    "fontawesome",
+    "jquery",
+    "babel",
   ],
   "homepage": "https://github.com/xremix/generator-gulp-sass-coffeescript",
   "author": {
