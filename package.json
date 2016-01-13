@@ -14,7 +14,7 @@
     "bootstrap",
     "fontawesome",
     "jquery",
-    "babel",
+    "babel"
   ],
   "homepage": "https://github.com/xremix/generator-gulp-sass-coffeescript",
   "author": {
