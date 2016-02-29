@@ -31,3 +31,5 @@ You can disable CoffeeScript if you want do develop using plain JS.
 - Image optimization
 
 *For a full list of features check out the [NPM](https://github.com/xremix/generator-gulp-sass-coffeescript/blob/master/app/templates/gulptemplates/package.json) and [Bower](https://github.com/xremix/generator-gulp-sass-coffeescript/blob/master/app/templates/gulptemplates/bower.json) dependencies*
+
+![Analytics](https://ga-beacon.appspot.com/UA-40522413-9/generator-gulp-sass-coffeescript/readme?pixel)
