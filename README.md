@@ -1,4 +1,5 @@
 #Gulp Sass CoffeeScript Yeoman generator
+[![npm version](https://badge.fury.io/js/generator-gulp-sass-coffeescript.svg)](https://badge.fury.io/js/generator-gulp-sass-coffeescript)
 
 ##Info
 This generator creates a Web Application based on Bootstrap, by using Gulp to build your code. Take a look at the features out more.
